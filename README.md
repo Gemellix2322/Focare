@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Focare 🧠✨
 
-## Getting Started
+Focare é uma aplicação web inovadora projetada para ajudar estudantes a alcançarem suas metas acadêmicas de forma mais eficiente. Utilizando o poder da inteligência artificial, o Focare cria planos de estudo personalizados e otimizados, transformando seus objetivos em um roteiro claro e alcançável.
 
-First, run the development server:
+![Demonstração do Focare](https://via.placeholder.com/800x400.png?text=Demonstração+da+Interface+do+Focare)
+*Substitua a URL acima por um print da sua aplicação.*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Principais Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+-   **🤖 Geração com IA:** Crie planos de estudo eficientes e personalizados com base em suas metas, matérias e tempo disponível.
+-   **🎯 Definição de Metas:** Insira seus objetivos de estudo de forma clara e simples para que a IA crie o melhor caminho para você.
+-   **🎨 Interface Moderna:** Construído com **Tailwind CSS** e **Shadcn/ui** para uma experiência de usuário limpa, intuitiva e agradável.
+-   **⚡ Performance Otimizada:** Desenvolvido com **Next.js** para garantir uma aplicação rápida, responsiva e com excelente performance.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🛠️ Tecnologias Utilizadas
 
-To learn more about Next.js, take a look at the following resources:
+Este projeto foi construído com as seguintes tecnologias de ponta:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-   [**Next.js**](https://nextjs.org/) - O framework React para produção.
+-   [**React**](https://react.dev/) - A biblioteca para construir interfaces de usuário.
+-   [**TypeScript**](https://www.typescriptlang.org/) - JavaScript com tipagem estática.
+-   [**Tailwind CSS**](https://tailwindcss.com/) - Um framework CSS utility-first.
+-   [**Shadcn/ui**](https://ui.shadcn.com/) - Componentes de UI reusáveis e acessíveis.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## ⚙️ Como Começar
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Siga os passos abaixo para executar o projeto em seu ambiente local.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Pré-requisitos
+
+-   [Node.js](https://nodejs.org/en) (versão 18.x ou superior)
+-   Um gerenciador de pacotes como `npm`, `yarn`, `pnpm` ou `bun`.
+
+### Instalação
+
+1.  **Clone o repositório:**
+    ```bash
+    git clone [https://github.com/seu-usuario/focare.git](https://github.com/seu-usuario/focare.git)
+    cd focare
+    ```
+
+2.  **Instale as dependências:**
+    ```bash
+    npm install
+    # ou
+    yarn install
+    # ou
+    pnpm install
+    ```
+
+3.  **Configure as variáveis de ambiente:**
+    Crie um arquivo chamado `.env.local` na raiz do projeto e adicione as chaves de API necessárias (por exemplo, a chave para a IA que você está utilizando).
+    ```env
+    # Exemplo de variável de ambiente
+    OPENAI_API_KEY="sua_chave_aqui"
+    ```
+
+4.  **Execute o servidor de desenvolvimento:**
+    ```bash
+    npm run dev
+    # ou
+    yarn dev
+    # ou
+    pnpm dev
+    ```
+
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado. Você pode começar a editar a página principal modificando o arquivo `app/page.tsx`. A página será atualizada automaticamente conforme você edita o arquivo.
+
+---
+
+## ☁️ Deploy na Vercel
+
+A maneira mais fácil de fazer o deploy da sua aplicação Next.js é usando a [Plataforma Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme), dos criadores do Next.js.
+
+Confira a [documentação de deploy do Next.js](https://nextjs.org/docs/app/building-your-application/deploying) para mais detalhes.
