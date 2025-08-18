@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase';
+import { createClient } from '../lib/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { BarChart, Book, Code, Lock, Mail, Target } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 
-export default function LandingPage() {
+export default async function LandingPage() {
   const router = useRouter();
 
   const [email, setEmail] = useState('');
@@ -19,7 +19,7 @@ export default function LandingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const handleLogin = async () => {
     setIsSubmitting(true);

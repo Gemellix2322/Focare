@@ -1,9 +1,9 @@
 "use server";
-import { createClient } from "@/lib/supabase";
+import { createClient } from "../../../lib/supabase/server";
 import { ActionResult } from "next/dist/server/app-render/types";
 
 export async function deleteTask(id: number): Promise<ActionResult> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase
     .from('tasks')
     .delete()

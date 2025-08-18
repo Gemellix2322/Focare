@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase";
+import { createClient } from "../../../lib/supabase/server";
 import { Task } from "@/lib/types";
 
 type AddTaskResult = {
@@ -13,7 +13,7 @@ export async function addTask(title: string): Promise<AddTaskResult> {
     return { error: { message: 'O título não pode estar vazio.' } };
   }
   
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
