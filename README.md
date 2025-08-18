@@ -1,81 +1,81 @@
 # Focare 🧠✨
 
-Focare é uma aplicação web inovadora projetada para ajudar estudantes a alcançarem suas metas acadêmicas de forma mais eficiente. Utilizando o poder da inteligência artificial, o Focare cria planos de estudo personalizados e otimizados, transformando seus objetivos em um roteiro claro e alcançável.
+Focare is an innovative web application designed to help students achieve their academic goals more efficiently. By leveraging the power of artificial intelligence, Focare creates personalized and optimized study plans, turning your objectives into a clear and achievable roadmap.
 
-![Demonstração do Focare](https://via.placeholder.com/800x400.png?text=Demonstração+da+Interface+do+Focare)
-*Substitua a URL acima por um print da sua aplicação.*
-
----
-
-## 🚀 Principais Funcionalidades
-
--   **🤖 Geração com IA:** Crie planos de estudo eficientes e personalizados com base em suas metas, matérias e tempo disponível.
--   **🎯 Definição de Metas:** Insira seus objetivos de estudo de forma clara e simples para que a IA crie o melhor caminho para você.
--   **🎨 Interface Moderna:** Construído com **Tailwind CSS** e **Shadcn/ui** para uma experiência de usuário limpa, intuitiva e agradável.
--   **⚡ Performance Otimizada:** Desenvolvido com **Next.js** para garantir uma aplicação rápida, responsiva e com excelente performance.
+![Focare Demo](https://via.placeholder.com/800x400.png?text=Focare+Interface+Demo)
+*Replace the URL above with a screenshot of your application.*
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🚀 Key Features
 
-Este projeto foi construído com as seguintes tecnologias de ponta:
-
--   [**Next.js**](https://nextjs.org/) - O framework React para produção.
--   [**React**](https://react.dev/) - A biblioteca para construir interfaces de usuário.
--   [**TypeScript**](https://www.typescriptlang.org/) - JavaScript com tipagem estática.
--   [**Tailwind CSS**](https://tailwindcss.com/) - Um framework CSS utility-first.
--   [**Shadcn/ui**](https://ui.shadcn.com/) - Componentes de UI reusáveis e acessíveis.
+-   **🤖 AI-Powered Generation:** Create efficient and personalized study plans based on your goals, subjects, and available time.
+-   **🎯 Goal Setting:** Easily input your study objectives, and let the AI build the best path for you.
+-   **🎨 Modern UI:** Built with **Tailwind CSS** and **Shadcn/ui** for a clean, intuitive, and enjoyable user experience.
+-   **⚡ Optimized Performance:** Developed with **Next.js** to ensure a fast, responsive, and high-performance application.
 
 ---
 
-## ⚙️ Como Começar
+## 🛠️ Tech Stack
 
-Siga os passos abaixo para executar o projeto em seu ambiente local.
+This project was built with the following modern technologies:
 
-### Pré-requisitos
+-   [**Next.js**](https://nextjs.org/) - The React Framework for Production.
+-   [**React**](https://react.dev/) - A library for building user interfaces.
+-   [**TypeScript**](https://www.typescriptlang.org/) - JavaScript with static typing.
+-   [**Tailwind CSS**](https://tailwindcss.com/) - A utility-first CSS framework.
+-   [**Shadcn/ui**](https://ui.shadcn.com/) - Re-usable and accessible UI components.
 
--   [Node.js](https://nodejs.org/en) (versão 18.x ou superior)
--   Um gerenciador de pacotes como `npm`, `yarn`, `pnpm` ou `bun`.
+---
 
-### Instalação
+## ⚙️ Getting Started
 
-1.  **Clone o repositório:**
+Follow the steps below to run the project in your local environment.
+
+### Prerequisites
+
+-   [Node.js](https://nodejs.org/en) (version 18.x or later)
+-   A package manager such as `npm`, `yarn`, `pnpm`, or `bun`.
+
+### Installation
+
+1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/seu-usuario/focare.git](https://github.com/seu-usuario/focare.git)
+    git clone [https://github.com/your-username/focare.git](https://github.com/your-username/focare.git)
     cd focare
     ```
 
-2.  **Instale as dependências:**
+2.  **Install dependencies:**
     ```bash
     npm install
-    # ou
+    # or
     yarn install
-    # ou
+    # or
     pnpm install
     ```
 
-3.  **Configure as variáveis de ambiente:**
-    Crie um arquivo chamado `.env.local` na raiz do projeto e adicione as chaves de API necessárias (por exemplo, a chave para a IA que você está utilizando).
+3.  **Set up environment variables:**
+    Create a file named `.env.local` in the root of the project and add the necessary API keys (e.g., the key for the AI you are using).
     ```env
-    # Exemplo de variável de ambiente
-    OPENAI_API_KEY="sua_chave_aqui"
+    # Environment variable example
+    OPENAI_API_KEY="your_key_here"
     ```
 
-4.  **Execute o servidor de desenvolvimento:**
+4.  **Run the development server:**
     ```bash
     npm run dev
-    # ou
+    # or
     yarn dev
-    # ou
+    # or
     pnpm dev
     ```
 
-Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado. Você pode começar a editar a página principal modificando o arquivo `app/page.tsx`. A página será atualizada automaticamente conforme você edita o arquivo.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the result. You can start editing the main page by modifying the `app/page.tsx` file. The page will auto-update as you edit the file.
 
 ---
 
-## ☁️ Deploy na Vercel
+## ☁️ Deploy on Vercel
 
-A maneira mais fácil de fazer o deploy da sua aplicação Next.js é usando a [Plataforma Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme), dos criadores do Next.js.
+The easiest way to deploy your Next.js application is by using the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Confira a [documentação de deploy do Next.js](https://nextjs.org/docs/app/building-your-application/deploying) para mais detalhes.
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
