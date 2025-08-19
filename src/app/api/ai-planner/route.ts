@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+/*import { NextResponse } from "next/server";
 
 type PlanTask = {
     title: string;
@@ -84,7 +84,7 @@ export async function POST(req: Request) {
         }
 
         return NextResponse.json(parsed);
-    } catch (err: any) {
+    } catch (err: erro) {
         return NextResponse.json({ error: "Erro interno", detail: err?.message }, { status: 500 });
     }
-}
+}*/

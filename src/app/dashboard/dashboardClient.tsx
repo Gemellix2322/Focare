@@ -161,7 +161,7 @@ function TaskItem({ task, onDelete, onToggle }: { task: Task; onDelete: (id: num
     );
 }
 
-function FooterLink({ icon, label, action }: { icon: React.ReactNode; label: string; action: any }) {
+function FooterLink({ icon, label, action }: { icon: React.ReactNode; label: string; action: () => void}) {
     return (
         <a href="#" className="flex items-center gap-2 hover:text-blue-600 transition-colors" onClick={action}>
             {icon}
