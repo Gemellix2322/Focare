@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
 export default function DashboardClient({ initialTasks }: { initialTasks: Task[] }) {
-    const route = useRouter();
+    const useRoute = useRouter();
     const supabase = createClient();
     const [tasks, setTasks] = useState<Task[]>(initialTasks);
     const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -55,7 +55,7 @@ export default function DashboardClient({ initialTasks }: { initialTasks: Task[]
 
     const handleSignOut = async () => {
         await supabase.auth.signOut();
-        route.push('/');
+        useRoute.push('/');
     };
 
     const completedTasks = tasks.filter(task => task.status === 'completed').length;
@@ -113,11 +113,11 @@ export default function DashboardClient({ initialTasks }: { initialTasks: Task[]
 
             <footer className="bg-white mt-12">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-center items-center gap-4 sm:gap-8 text-gray-500">
-                    <FooterLink icon={<Settings className="w-5 h-5" />} label="Configurações" action={() => route.push('#')} />
+                    <FooterLink icon={<Settings className="w-5 h-5" />} label="Configurações" action={() => useRoute.push('#')} />
                     <span className="text-gray-300">|</span>
-                    <FooterLink icon={<BarChart className="w-5 h-5" />} label="Estatísticas" action={() => route.push('#')} />
+                    <FooterLink icon={<BarChart className="w-5 h-5" />} label="Estatísticas" action={() => useRoute.push('#')} />
                     <span className="text-gray-300">|</span>
-                    <FooterLink icon={<User className="w-5 h-5" />} label="Perfil" action={() => route.push('/perfil')} />
+                    <FooterLink icon={<User className="w-5 h-5" />} label="Perfil" action={() => useRoute.push('/perfil')} />
                 </div>
             </footer>
         </div>
