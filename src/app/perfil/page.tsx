@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { BarChart, LayoutDashboard, Settings } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export default function perfil() {
+export default function Perfil() {
     const useRoute = useRouter()
 
     return (
