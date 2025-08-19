@@ -146,7 +146,12 @@ function TaskItem({ task, onDelete, onToggle }: { task: Task; onDelete: (id: num
                 </button>
                 <div>
                     <p className={`font-medium ${isCompleted ? 'line-through text-gray-400' : ''}`}>{task.title}</p>
-                    <p className="text-sm text-gray-400">{new Date(task.created_at).toLocaleDateString()}</p>
+                    <p
+                        className="text-sm text-gray-400"
+                        suppressHydrationWarning={true}
+                    >
+                        {new Date(task.created_at).toLocaleDateString()}
+                    </p>
                 </div>
             </div>
             <button onClick={() => onDelete(task.id)} className="text-gray-400 hover:text-red-500 p-2 rounded-full hover:bg-gray-100">
