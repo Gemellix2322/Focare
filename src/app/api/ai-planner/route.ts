@@ -88,3 +88,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Erro interno", detail: err?.message }, { status: 500 });
     }
 }*/
+export default function Teste () {
+    return(console.log("funciona"))
+}
+
