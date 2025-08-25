@@ -100,8 +100,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end" forceMount>
-                <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
-                <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => router.push('/perfil')}>
                   <User className="mr-2 h-4 w-4" />
                   <span>Visualizar Perfil</span>
