@@ -6,8 +6,9 @@ import { createClient } from "../lib/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { BarChart, Book, Code, Lock, Mail, Target } from "lucide-react";
+import { BarChart, Book, Code, Lock, Mail, Target, User } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { cn } from "@/lib/utils";
 
 export default function LandingClient() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function LandingClient() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -46,6 +48,11 @@ export default function LandingClient() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data:{
+          full_name: user
+        }
+      }
     });
 
     if (error) {
@@ -58,7 +65,7 @@ export default function LandingClient() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-white text-gray-800">
+    <div className="min-h-screen w-full bg-background">
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
@@ -67,7 +74,7 @@ export default function LandingClient() {
           <h1 className="text-5xl font-bold leading-tight">
             Revolucione seus <span className="text-blue-600">estudos com IA</span>
           </h1>
-          <p className="mt-4 text-lg text-gray-600">
+          <p className="mt-4 text-lg text-muted-foreground">
             Organize, planeje e otimize seu aprendizado com o poder da inteligência artificial.
             Transforme sua rotina de estudos em resultados extraordinários.
           </p>
@@ -96,9 +103,9 @@ export default function LandingClient() {
         </div>
 
         <div className="flex items-center justify-center p-4">
-          <Card className="w-full max-w-md shadow-2xl rounded-2xl">
+          <Card className="w-full max-w-md shadow-2xl rounded-2xl bg-card">
             <div className="p-6 flex flex-col items-center text-center">
-              <div className="bg-blue-100 p-3 rounded-full mb-4">
+              <div className="bg-muted p-3 rounded-full mb-4">
                 <Code className="w-8 h-8 text-blue-600" />
               </div>
               <h2 className="text-2xl font-bold">Gestão de Estudos com IA</h2>
@@ -106,15 +113,25 @@ export default function LandingClient() {
             </div>
 
             <div className="px-6 pb-2">
-              <div className="flex border border-gray-200 rounded-lg p-1 mb-6 bg-gray-50">
+              <div className="flex border border-muted-foreground rounded-lg p-1 mb-6 bg-inactive">
                 <Button
-                  className="w-1/2 bg-white shadow-sm text-blue-600 font-semibold hover:text-white"
+                  className={cn(
+                    "w-1/2 font-semibold",
+                    authMode === "login"
+                      ? "bg-white shadow-sm text-blue-600 hover:bg-stone-200"
+                      : "bg-stone-100 text-gray-500 hover:bg-stone-200"
+                  )}
                   onClick={() => setAuthMode("login")}
                 >
                   Entrar
                 </Button>
                 <Button
-                  className="w-1/2 text-gray-500 bg-stone-100"
+                  className={cn(
+                    "w-1/2 font-semibold",
+                    authMode === "signup"
+                      ? "bg-white shadow-sm text-blue-600 hover:bg-stone-200"
+                      : "bg-stone-100 text-gray-500 hover:bg-stone-200"
+                  )}
                   onClick={() => setAuthMode("signup")}
                 >
                   Cadastrar
@@ -127,6 +144,18 @@ export default function LandingClient() {
               {message && <p className="text-green-500 text-sm text-center">{message}</p>}
 
               <div>
+                {authMode === 'signup' ?
+                  <><label className="text-sm font-medium text-gray-700 mb-1 block">Usuário</label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                      <Input
+                        type="text"
+                        placeholder="User123"
+                        className="pl-10"
+                        value={user}
+                        onChange={(e) => setUser(e.target.value)} />
+                    </div>
+                  </> : null} 
                 <label className="text-sm font-medium text-gray-700 mb-1 block">E-mail</label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -156,16 +185,12 @@ export default function LandingClient() {
               <div className="flex gap-4">
                 <Button
                   onClick={authMode === "login" ? handleLogin : handleSignUp}
-                  className="w-full"
+                  className="w-full bg-muted shadow-sm text-blue-600 hover:bg-subtle"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting
-                    ? authMode === "login"
-                      ? "Entrando..."
-                      : "Cadastrando..."
-                    : authMode === "login"
-                      ? "Entrar"
-                      : "Criar Conta"}
+                  {authMode === "login"
+                    ? "Entrar"
+                    : "Criar Conta"}
                 </Button>
               </div>
             </CardContent>
@@ -179,10 +204,10 @@ export default function LandingClient() {
 function FeatureCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
   return (
     <div className="flex items-start space-x-4">
-      <div className="flex-shrink-0 bg-blue-50 p-3 rounded-full">{icon}</div>
+      <div className="flex-shrink-0 bg-muted p-3 rounded-full">{icon}</div>
       <div>
         <h3 className="text-lg font-semibold">{title}</h3>
-        <p className="text-gray-500">{description}</p>
+        <p className="text-muted-foreground">{description}</p>
       </div>
     </div>
   );

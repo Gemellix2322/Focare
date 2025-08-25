@@ -5,7 +5,7 @@ import { Task } from '@/lib/types';
 import { addTask } from './actions/addTask';
 import { updateTask } from './actions/updateTask';
 import { deleteTask } from './actions/deleteTask';
-import { BookOpen, CheckCircle, Clock, Plus, Trash, Settings, BarChart, User } from 'lucide-react';
+import { BookOpen, CheckCircle, Clock, Plus, Trash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
@@ -66,7 +66,6 @@ export default function DashboardClient({ initialTasks }: { initialTasks: Task[]
             <header className="bg-white shadow-sm">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
                     <h1 className="text-2xl font-bold">Meu Plano de Estudos</h1>
-                    <Button className="text-gray-600 hover:text-gray-800" variant={'outline'} onClick={handleSignOut}>Sair</Button>
                 </div>
             </header>
 
@@ -111,15 +110,7 @@ export default function DashboardClient({ initialTasks }: { initialTasks: Task[]
                 </div>
             </main>
 
-            <footer className="bg-white mt-12">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-center items-center gap-4 sm:gap-8 text-gray-500">
-                    <FooterLink icon={<Settings className="w-5 h-5" />} label="Configurações" action={() => useRoute.push('#')} />
-                    <span className="text-gray-300">|</span>
-                    <FooterLink icon={<BarChart className="w-5 h-5" />} label="Estatísticas" action={() => useRoute.push('#')} />
-                    <span className="text-gray-300">|</span>
-                    <FooterLink icon={<User className="w-5 h-5" />} label="Perfil" action={() => useRoute.push('/perfil')} />
-                </div>
-            </footer>
+            {/* A seção do footer foi removida daqui */}
         </div>
     );
 }
@@ -159,13 +150,4 @@ function TaskItem({ task, onDelete, onToggle }: { task: Task; onDelete: (id: num
             </button>
         </div>
     );
-}
-
-function FooterLink({ icon, label, action }: { icon: React.ReactNode; label: string; action: () => void}) {
-    return (
-        <a href="#" className="flex items-center gap-2 hover:text-blue-600 transition-colors" onClick={action}>
-            {icon}
-            <span className="hidden sm:inline">{label}</span>
-        </a>
-    )
 }
