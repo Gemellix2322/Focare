@@ -1,4 +1,3 @@
-// app/dashboard/layout.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -25,6 +24,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User as SupabaseUser } from "@supabase/supabase-js";
 
+// Tipo para os dados do perfil para melhor organização
+type ProfileData = {
+  full_name: string;
+  avatar_url: string;
+};
+
 function NavLink({ href, icon, children }: { href: string; icon: React.ReactNode; children: React.ReactNode }) {
   return (
     <Link href={href} className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
@@ -38,23 +43,52 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const router = useRouter();
   const supabase = createClient();
   const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [profile, setProfile] = useState<ProfileData | null>(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
+    const fetchData = async () => {
+      // 1. Pega o usuário da sessão de autenticação
+      const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
+
+      if (authError || !authUser) {
+        console.error("Erro ao buscar usuário ou usuário não logado:", authError);
+        router.push('/'); // Redireciona se não houver usuário
+        return;
+      }
+      
+      setUser(authUser);
+
+      // 2. Usa o ID do usuário para buscar os dados na tabela 'profiles'
+      const { data: profileData, error: profileError } = await supabase
+        .from('profiles')
+        .select('full_name, avatar_url')
+        .eq('id', authUser.id)
+        .single();
+
+      if (profileError) {
+        console.error("Erro ao buscar dados do perfil:", profileError);
+      } else {
+        setProfile(profileData);
+      }
     };
-    fetchUser();
+
+    fetchData();
   }, []);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    router.push("/"); 
+    router.push("/");
     router.refresh();
   };
 
-  const getInitials = (email: string) => {
-    return email ? email[0].toUpperCase() : "?";
+  const getInitials = (name: string) => {
+    if (!name) return "?";
+    // Pega as iniciais do nome completo se disponível, senão do email
+    const nameParts = name.split(' ');
+    if (nameParts.length > 1) {
+      return (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase();
+    }
+    return name[0].toUpperCase();
   };
 
   return (
@@ -80,26 +114,28 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               </NavLink>
             </nav>
           </div>
-          
+
           <div className="mt-auto p-4 space-y-2">
             <NavLink href="#" icon={<Settings className="h-4 w-4" />}>
               Configurações
             </NavLink>
-            
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="w-full justify-start gap-3 px-3 py-2 h-auto">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={user?.user_metadata.avatar_url} /> 
-                    <AvatarFallback>{getInitials(user?.email || "")}</AvatarFallback>
+                    <AvatarImage src={profile?.avatar_url} />
+                    <AvatarFallback>{getInitials(profile?.full_name || user?.email || "")}</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col items-start">
-                    <span className="text-sm font-medium">{user?.user_metadata.full_name || "Usuário"}</span>
+                    <span className="text-sm font-medium">{profile?.full_name || "Usuário"}</span>
                     <span className="text-xs text-muted-foreground">{user?.email}</span>
                   </div>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => router.push('/perfil')}>
                   <User className="mr-2 h-4 w-4" />
                   <span>Visualizar Perfil</span>
@@ -113,7 +149,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </div>
       </aside>
-      
+
       <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
         {children}
       </main>
