@@ -18,17 +18,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { User as SupabaseUser } from "@supabase/supabase-js";
-
-// Tipo para os dados do perfil para melhor organização
-type ProfileData = {
-  full_name: string;
-  avatar_url: string;
-};
+import Config from "@/app/config/Config";
 
 function NavLink({ href, icon, children }: { href: string; icon: React.ReactNode; children: React.ReactNode }) {
   return (
@@ -39,39 +32,33 @@ function NavLink({ href, icon, children }: { href: string; icon: React.ReactNode
   );
 }
 
+type ProfileData = {
+  full_name: string;
+  avatar_url: string;
+};
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const supabase = createClient();
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      // 1. Pega o usuário da sessão de autenticação
-      const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
-
-      if (authError || !authUser) {
-        console.error("Erro ao buscar usuário ou usuário não logado:", authError);
-        router.push('/'); // Redireciona se não houver usuário
-        return;
-      }
-      
-      setUser(authUser);
-
-      // 2. Usa o ID do usuário para buscar os dados na tabela 'profiles'
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('full_name, avatar_url')
-        .eq('id', authUser.id)
-        .single();
-
-      if (profileError) {
-        console.error("Erro ao buscar dados do perfil:", profileError);
-      } else {
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      if (authUser) {
+        setUser(authUser);
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('full_name, avatar_url')
+          .eq('id', authUser.id)
+          .single();
         setProfile(profileData);
+      } else {
+        router.push('/');
       }
     };
-
     fetchData();
   }, []);
 
@@ -83,7 +70,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const getInitials = (name: string) => {
     if (!name) return "?";
-    // Pega as iniciais do nome completo se disponível, senão do email
     const nameParts = name.split(' ');
     if (nameParts.length > 1) {
       return (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase();
@@ -114,11 +100,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               </NavLink>
             </nav>
           </div>
-
+          
           <div className="mt-auto p-4 space-y-2">
-            <NavLink href="#" icon={<Settings className="h-4 w-4" />}>
-              Configurações
-            </NavLink>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -134,11 +117,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end" forceMount>
-                <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
-                <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => router.push('/perfil')}>
                   <User className="mr-2 h-4 w-4" />
                   <span>Visualizar Perfil</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setIsConfigOpen(true)}>
+                  <Settings className="mr-2 h-4 w-4"/>
+                  <span>Configurações</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleLogout}>
                   <LogOut className="mr-2 h-4 w-4" />
@@ -153,6 +138,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
         {children}
       </main>
+      <Config
+      setIsConfigOpen={setIsConfigOpen}
+      isConfigOpen={isConfigOpen}
+      />
     </div>
   );
 }
