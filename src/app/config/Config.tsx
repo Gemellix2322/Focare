@@ -64,14 +64,6 @@ export default function Config({ isConfigOpen, setIsConfigOpen }: ConfigProps) {
                     </main>
 
                 </div>
-
-                <DialogFooter>
-                    <DialogClose asChild>
-                        <Button type="button" variant="secondary">
-                            Fechar
-                        </Button>
-                    </DialogClose>
-                </DialogFooter>
             </DialogContent>
         </Dialog>
     )

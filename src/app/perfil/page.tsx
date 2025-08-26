@@ -11,8 +11,8 @@ import { StudyProgress } from "./components/StudyProgress";
 import { createClient } from "@/lib/supabase/client";
 
 type UserProfile = {
+    username: string;
     fullName: string;
-    description: string;
     avatarUrl?: string;
 };
 type StudyStats = {
@@ -41,13 +41,13 @@ export default function Perfil() {
         try {
             const { data: userData, error: userError } = await supabase
                 .from('profiles')
-                .select('full_name, description, avatar_url')
+                .select('username, full_name, avatar_url')
                 .single();
 
             if (userError) throw userError;
             setUser({
+                username: userData.username,
                 fullName: userData.full_name,
-                description: userData.description,
                 avatarUrl: userData.avatar_url,
             });
 
