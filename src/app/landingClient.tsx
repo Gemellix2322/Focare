@@ -1,65 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "../lib/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { BarChart, Book, Code, Lock, Mail, Target, User } from "lucide-react";
+import { BarChart, Book, Code, Target } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { cn } from "@/lib/utils";
 
 export default function LandingClient() {
   const router = useRouter();
-  const supabase = createClient(); // agora não precisa de await aqui
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
-
-  const handleLogin = async () => {
-    setIsSubmitting(true);
-    setError(null);
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-      router.push("/dashboard");
-      router.refresh();
-
-    setIsSubmitting(false);
-  };
-
-  const handleSignUp = async () => {
-    setIsSubmitting(true);
-    setError(null);
-    setMessage(null);
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data:{
-          full_name: user
-        }
-      }
-    });
-
-    if (error) {
-      setError(error.message);
-    } else {
-      setMessage("Cadastro realizado! Verifique seu e-mail para confirmação.");
-      setAuthMode("login");
-    }
-    setIsSubmitting(false);
-  };
 
   return (
     <div className="min-h-screen w-full bg-background">
@@ -100,7 +49,7 @@ export default function LandingClient() {
         </div>
 
         <div className="flex items-center justify-center p-4">
-          <Card className="w-full max-w-md shadow-2xl rounded-2xl bg-card">
+          <Card className="w-full max-w-md bg-card">
             <div className="p-6 flex flex-col items-center text-center">
               <div className="bg-muted p-3 rounded-full mb-4">
                 <Code className="w-8 h-8 text-blue-600" />
@@ -108,88 +57,10 @@ export default function LandingClient() {
               <h2 className="text-2xl font-bold">Gestão de Estudos com IA</h2>
               <p className="text-gray-500 mt-1">Organize seus estudos de forma inteligente</p>
             </div>
-
-            <div className="px-6 pb-2">
-              <div className="flex border border-muted-foreground rounded-lg p-1 mb-6 bg-inactive">
-                <Button
-                  className={cn(
-                    "w-1/2 font-semibold",
-                    authMode === "login"
-                      ? "bg-white shadow-sm text-blue-600 hover:bg-stone-200"
-                      : "bg-stone-100 text-gray-500 hover:bg-stone-200"
-                  )}
-                  onClick={() => setAuthMode("login")}
-                >
-                  Entrar
-                </Button>
-                <Button
-                  className={cn(
-                    "w-1/2 font-semibold",
-                    authMode === "signup"
-                      ? "bg-white shadow-sm text-blue-600 hover:bg-stone-200"
-                      : "bg-stone-100 text-gray-500 hover:bg-stone-200"
-                  )}
-                  onClick={() => setAuthMode("signup")}
-                >
-                  Cadastrar
-                </Button>
-              </div>
-            </div>
-
-            <CardContent className="space-y-4">
-              {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-              {message && <p className="text-green-500 text-sm text-center">{message}</p>}
-
-              <div>
-                {authMode === 'signup' ?
-                  <><label className="text-sm font-medium text-gray-700 mb-1 block">Usuário</label>
-                    <div className="relative">
-                      <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                      <Input
-                        type="text"
-                        placeholder="User123"
-                        className="pl-10"
-                        value={user}
-                        onChange={(e) => setUser(e.target.value)} />
-                    </div>
-                  </> : null} 
-                <label className="text-sm font-medium text-gray-700 mb-1 block">E-mail</label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <Input
-                    type="email"
-                    placeholder="seu@email.com"
-                    className="pl-10"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-700 mb-1 block">Senha</label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <Input
-                    type="password"
-                    placeholder="********"
-                    className="pl-10"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="flex gap-4">
-                <Button
-                  onClick={authMode === "login" ? handleLogin : handleSignUp}
-                  className="w-full bg-muted shadow-sm text-blue-600 hover:bg-subtle"
-                  disabled={isSubmitting}
-                >
-                  {authMode === "login"
-                    ? "Entrar"
-                    : "Criar Conta"}
-                </Button>
-              </div>
+            <CardContent>
+              <Button className="w-full" onClick={() => router.push("/dashboard")}>
+                Acessar estudos
+              </Button>
             </CardContent>
           </Card>
         </div>

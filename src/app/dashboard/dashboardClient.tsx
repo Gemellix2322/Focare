@@ -7,12 +7,8 @@ import { updateTask } from './actions/updateTask';
 import { deleteTask } from './actions/deleteTask';
 import { BookOpen, CheckCircle, Clock, Plus, Trash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
 
 export default function DashboardClient({ initialTasks }: { initialTasks: Task[] }) {
-    const useRoute = useRouter();
-    const supabase = createClient();
     const [tasks, setTasks] = useState<Task[]>(initialTasks);
     const [newTaskTitle, setNewTaskTitle] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -51,11 +47,6 @@ export default function DashboardClient({ initialTasks }: { initialTasks: Task[]
             setError("Falha ao deletar a tarefa. Tente novamente.");
             setTasks(originalTasks);
         }
-    };
-
-    const handleSignOut = async () => {
-        await supabase.auth.signOut();
-        useRoute.push('/');
     };
 
     const completedTasks = tasks.filter(task => task.status === 'completed').length;
